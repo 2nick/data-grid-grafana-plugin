@@ -1,7 +1,7 @@
 /* tslint:disable */
 import React, { Component } from 'react';
 import { ColumnOption, RangeMap, ValueMap } from 'types';
-import { Button, ButtonSelect, PanelOptionsGroup, Select, StatsPicker, Switch, LegacyForms } from '@grafana/ui';
+import { Button, ButtonSelect, Select, StatsPicker, Switch, LegacyForms } from '@grafana/ui';
 import { CSS_COLORS, FORM_ELEMENT_WIDTH, LABEL_WIDTH, THRESHOLDS_COUNT_DOES_NOT_FIT } from '../consts';
 import EditorTab from './EditorTab';
 import { ColumnSetting, loadColors, loadFormats } from '../utils';
@@ -63,9 +63,9 @@ function mapArrayToString(values: number[] | string[]) {
 
 function mapValueMappers(mapper: RangeOrValueMap): string {
   if (isRangeMap(mapper)) {
-    return mapper.map(valueMap => `${valueMap[0]}-${valueMap[1]}=${valueMap[2]}`).join(', ');
+    return mapper.map((valueMap) => `${valueMap[0]}-${valueMap[1]}=${valueMap[2]}`).join(', ');
   } else {
-    return mapper.map(valueMap => `${valueMap[0]}=${valueMap[1]}`).join(', ');
+    return mapper.map((valueMap) => `${valueMap[0]}=${valueMap[1]}`).join(', ');
   }
 }
 
@@ -78,7 +78,7 @@ export default class ColumnOptionComponent extends Component<Props, State> {
   public static getDerivedStateFromProps(props: Props): State {
     return {
       labels: [{ label: SERIES_VALUE, value: SERIES_VALUE }].concat(
-        props.labels.map(value => ({ label: value, value }))
+        props.labels.map((value) => ({ label: value, value }))
       ),
     };
   }
@@ -299,7 +299,8 @@ export default class ColumnOptionComponent extends Component<Props, State> {
     return (
       <EditorTab visible={visible}>
         <div>
-          <PanelOptionsGroup title="Value">
+          <>
+            <h5>Value</h5>
             <div className="section">
               <div className="gf-form">
                 <LegacyForms.FormField
@@ -321,8 +322,9 @@ export default class ColumnOptionComponent extends Component<Props, State> {
                 />
               </div>
             </div>
-          </PanelOptionsGroup>
-          <PanelOptionsGroup title="Appearance: General">
+          </>
+          <>
+            <h5>Appearance: General</h5>
             <div className="section">
               <div className="gf-form">
                 <LegacyForms.FormField
@@ -414,8 +416,9 @@ export default class ColumnOptionComponent extends Component<Props, State> {
                 />
               </div>
             </div>
-          </PanelOptionsGroup>
-          <PanelOptionsGroup title="Appearance: Colors">
+          </>
+          <>
+            <h5>Appearance: Colors</h5>
             <div className="section">
               <div className="gf-form">
                 <InputOnBlur<string[]>
@@ -475,9 +478,10 @@ export default class ColumnOptionComponent extends Component<Props, State> {
                 />
               </div>
             </div>
-          </PanelOptionsGroup>
+          </>
           {!isDefault && (
-            <PanelOptionsGroup title="Column">
+            <>
+              <h5>Column</h5>
               <div className="section">
                 <div className="gf-form">
                   <LegacyForms.FormField
@@ -491,9 +495,10 @@ export default class ColumnOptionComponent extends Component<Props, State> {
                   />
                 </div>
               </div>
-            </PanelOptionsGroup>
+            </>
           )}
-          <PanelOptionsGroup title="Stat">
+          <>
+            <h5>Stat</h5>
             <div className="section">
               <div className="gf-form">
                 <LegacyForms.FormField
@@ -511,14 +516,14 @@ export default class ColumnOptionComponent extends Component<Props, State> {
                 />
               </div>
             </div>
-          </PanelOptionsGroup>
+          </>
           <div style={actionsStyle}>
             <Button onClick={onDelete} size="xs" variant="destructive">
               Delete
             </Button>
             {restColumns.length > 0 && (
               <div className="width-15">
-                <ButtonSelect<string> className="width-15" options={restColumns} value={COPY_VALUE} onChange={onCopy} />
+                <ButtonSelect className="width-15" options={restColumns} value={COPY_VALUE} onChange={onCopy as any} />
               </div>
             )}
           </div>

@@ -11,7 +11,6 @@ import {
   getValueFormat,
   getColorFromHexRgbOrName,
   GrafanaTheme,
-  getDecimalsForValue,
 } from '@grafana/data';
 import { CustomColumnStyle } from '../../types';
 
@@ -197,8 +196,7 @@ class CellBuilderWithStyle {
       }
 
       if (this.fmt) {
-        const { decimals } = getDecimalsForValue(value, this.style.decimals);
-        formatted = this.fmt(value, decimals);
+        formatted = this.fmt(value, this.style.decimals);
       } else {
         formatted = value;
       }

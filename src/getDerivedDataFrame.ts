@@ -4,7 +4,6 @@ import {
   DataFrame,
   Field,
   FieldType,
-  getColorByName,
   getColorForTheme,
   GrafanaTheme,
   Labels,
@@ -60,10 +59,10 @@ function mapColors(theme: GrafanaTheme, color: string): string {
     return color;
   }
 
-  const definition = getColorByName(color);
+  const themedColor = getColorForTheme(color, theme);
 
-  if (definition) {
-    return getColorForTheme(definition, theme.type);
+  if (themedColor !== color) {
+    return themedColor;
   }
 
   return CSS_COLORS[color] || color;
@@ -86,7 +85,7 @@ function columnOptionToStyle(
 ): CustomColumnStyle {
   const result: CustomColumnStyle = {
     colorMode,
-    colors: colors && colors.length > 0 ? colors.map(color => mapColors(theme, color)) : undefined,
+    colors: colors && colors.length > 0 ? colors.map((color) => mapColors(theme, color)) : undefined,
     decimals,
     discreteColors,
     pattern: column || '',
@@ -228,7 +227,7 @@ export default function getDerivedDataFrame(
           field: bucketSeries[i].fields[0],
           reducers: [option.type],
         };
-        const mapResult = data => data[option.type];
+        const mapResult = (data) => data[option.type];
 
         value = mapResult(reduceField(reducerData));
       } else {
