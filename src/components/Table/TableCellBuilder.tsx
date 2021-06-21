@@ -9,7 +9,7 @@ import {
   ValueMap,
   ValueFormatter,
   getValueFormat,
-  getColorFromHexRgbOrName,
+  getColorForTheme,
   GrafanaTheme,
 } from '@grafana/data';
 import { CustomColumnStyle } from '../../types';
@@ -122,7 +122,7 @@ class CellBuilderWithStyle {
 
   public getColorForValue = (value: any): string | null => {
     const { thresholds, colors } = this.style;
-    const returnFirst = () => getColorFromHexRgbOrName(_.first(colors), this.theme.type);
+    const returnFirst = () => getColorForTheme(_.first(colors), this.theme);
     if (!colors) {
       return null;
     }
@@ -134,11 +134,11 @@ class CellBuilderWithStyle {
     for (let i = thresholds.length; i > 0; i--) {
       if (value >= thresholds[i - 1]) {
         if (this.style.discreteColors) {
-          return getColorFromHexRgbOrName(colors[i], this.theme.type);
+          return getColorForTheme(colors[i], this.theme);
         }
 
         if (i === thresholds.length) {
-          return getColorFromHexRgbOrName(_.last(colors), this.theme.type);
+          return getColorForTheme(_.last(colors), this.theme);
         }
 
         let scale = this.scales[thresholds[i - 1]];
@@ -147,8 +147,8 @@ class CellBuilderWithStyle {
           return scale(value);
         }
 
-        const color1 = getColorFromHexRgbOrName(colors[i - 1], this.theme.type);
-        const color2 = getColorFromHexRgbOrName(colors[i], this.theme.type);
+        const color1 = getColorForTheme(colors[i - 1], this.theme);
+        const color2 = getColorForTheme(colors[i], this.theme);
 
         scale = scaleLinear<string>()
           .domain([thresholds[i - 1], thresholds[i]])
@@ -179,6 +179,7 @@ class CellBuilderWithStyle {
               ...props,
               style: {
                 ...props.style,
+                ...props.parent.props.s0[props.columnIndex - 1],
                 backgroundColor: color,
                 color: 'white',
               },
@@ -188,6 +189,7 @@ class CellBuilderWithStyle {
               ...props,
               style: {
                 ...props.style,
+                ...props.parent.props.s0[props.columnIndex - 1],
                 color: color,
               },
             };
