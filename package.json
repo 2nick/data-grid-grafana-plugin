@@ -11,17 +11,18 @@
   "author": "OZON team",
   "license": "MIT",
   "devDependencies": {
-    "@grafana/data": "~7.5.1",
-    "@grafana/runtime": "~7.5.1",
-    "@grafana/toolkit": "~7.5.1",
-    "@grafana/ui": "~7.5.1",
+    "@grafana/data": "^9.4.7",
+    "@grafana/runtime": "^9.4.7",
+    "@grafana/toolkit": "^9.4.7",
+    "@grafana/ui": "^9.4.7",
     "@types/classnames": "^2.2.9",
     "@types/d3-scale": "^2.1.1",
     "@types/grafana": "github:CorpGlory/types-grafana.git"
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "d3-scale": "^3.2.1",
-    "react-virtualized": "9.21.0"
+    "d3-scale": "^4.0.2",
+    "react-virtualized": "9.21.0",
+    "validator": "^13.9.0"
   }
 }

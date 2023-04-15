@@ -1,6 +1,7 @@
 import { ColumnOption, RangeMap, ValueMap } from './types';
 import kbn from 'grafana/app/core/utils/kbn';
-import { ReducerID, getNamedColorPalette } from '@grafana/data';
+// import { ReducerID, getNamedColorPalette } from '@grafana/data';
+import { ReducerID } from '@grafana/data';
 
 export class ColumnSetting implements ColumnOption {
   public static copy(option: ColumnOption): ColumnOption {
@@ -62,14 +63,14 @@ export function loadColors(): string[] {
     return colorsCache;
   }
 
-  getNamedColorPalette().forEach((definitions) => {
-    for (let i = 0; i < definitions.length; i++) {
-      if (definitions[i].variants.dark) {
-        const clrName = definitions[i].name;
-        colorsCache.push(clrName);
-      }
-    }
-  });
+  // getNamedColorPalette().forEach((definitions) => {
+  //   for (let i = 0; i < definitions.length; i++) {
+  //     if (definitions[i].variants.dark) {
+  //       const clrName = definitions[i].name;
+  //       colorsCache.push(clrName);
+  //     }
+  //   }
+  // });
 
   return colorsCache;
 }

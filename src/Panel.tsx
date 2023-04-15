@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { PureComponent } from 'react';
-import { PanelProps, GrafanaTheme } from '@grafana/data';
+import { PanelProps, GrafanaTheme2 } from '@grafana/data';
 import { Alert, ThemeContext } from '@grafana/ui';
 import Table from './components/Table';
 import { Options } from 'types';
@@ -8,7 +8,7 @@ import getDerivedDataFrame from './getDerivedDataFrame';
 import validateOptions from './validateOptions';
 
 interface Props extends PanelProps<Options> {
-  theme: GrafanaTheme;
+  theme: GrafanaTheme2;
 }
 
 class Panel extends PureComponent<Props> {

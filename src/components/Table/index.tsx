@@ -1,15 +1,15 @@
 /* tslint:disable */
 import React, { Component, ReactElement } from 'react';
 import { CellMeasurer, CellMeasurerCache, GridCellProps, Index, MultiGrid, SortDirectionType } from 'react-virtualized';
-import { Themeable } from '@grafana/ui';
-import { GrafanaTheme, ArrayVector, DataFrame, sortDataFrame, stringToJsRegex } from '@grafana/data';
+import { Themeable2 } from '@grafana/ui';
+import { GrafanaTheme2, ArrayVector, DataFrame, sortDataFrame, stringToJsRegex } from '@grafana/data';
 
 import { getCellBuilder, simpleCellBuilder, TableCellBuilder, TableCellBuilderOptions } from './TableCellBuilder';
 import { CustomColumnStyle } from '../../types';
 import { ColumnHeader } from './ColumnHeader';
 import './index.css';
 
-export interface Props extends Themeable {
+export interface Props extends Themeable2 {
   data: DataFrame;
 
   minColumnWidth: number;
@@ -20,7 +20,7 @@ export interface Props extends Themeable {
   fixedColumnsWidth: { [k: string]: number };
   width: number;
   height: number;
-  theme: GrafanaTheme;
+  theme: GrafanaTheme2;
 }
 
 interface State {

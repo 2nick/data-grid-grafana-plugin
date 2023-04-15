@@ -9,8 +9,7 @@ import {
   ValueMap,
   ValueFormatter,
   getValueFormat,
-  getColorForTheme,
-  GrafanaTheme,
+  GrafanaTheme2,
 } from '@grafana/data';
 import { CustomColumnStyle } from '../../types';
 
@@ -42,17 +41,19 @@ function valueMapper(value: number | string, style: CustomColumnStyle) {
     for (let i = 0; i < style.valueMaps.length; i++) {
       const mapper = style.valueMaps[i] as ValueMap;
 
-      if (mapper.value === value) {
-        return mapper.text;
-      }
+      console.log(mapper)
+      // if (mapper.value === value) {
+      //   return mapper.text;
+      // }
     }
   } else if (style.rangeMaps && style.rangeMaps.length > 0) {
     for (let i = 0; i < style.rangeMaps.length; i++) {
       const mapper = style.rangeMaps[i] as RangeMap;
 
-      if (mapper.from <= value && mapper.to >= value) {
-        return mapper.text;
-      }
+      console.log(mapper)
+      // if (mapper.from <= value && mapper.to >= value) {
+      //   return mapper.text;
+      // }
     }
   }
 
@@ -62,7 +63,7 @@ function valueMapper(value: number | string, style: CustomColumnStyle) {
 export function getCellBuilder(
   schema: Field['config'],
   style: CustomColumnStyle | null,
-  theme: GrafanaTheme
+  theme: GrafanaTheme2
 ): TableCellBuilder {
   if (!style) {
     return simpleCellBuilder;
@@ -116,13 +117,13 @@ class CellBuilderWithStyle {
   constructor(
     private mapper: ValueMapper,
     private style: CustomColumnStyle,
-    private theme: GrafanaTheme,
+    private theme: GrafanaTheme2,
     private fmt?: ValueFormatter
   ) {}
 
   public getColorForValue = (value: any): string | null => {
     const { thresholds, colors } = this.style;
-    const returnFirst = () => getColorForTheme(_.first(colors), this.theme);
+    const returnFirst = () => this.theme.visualization.getColorByName(_.first(colors));
     if (!colors) {
       return null;
     }
@@ -134,11 +135,11 @@ class CellBuilderWithStyle {
     for (let i = thresholds.length; i > 0; i--) {
       if (value >= thresholds[i - 1]) {
         if (this.style.discreteColors) {
-          return getColorForTheme(colors[i], this.theme);
+          return this.theme.visualization.getColorByName(colors[i]);
         }
 
         if (i === thresholds.length) {
-          return getColorForTheme(_.last(colors), this.theme);
+          return this.theme.visualization.getColorByName(_.last(colors));
         }
 
         let scale = this.scales[thresholds[i - 1]];
@@ -147,8 +148,8 @@ class CellBuilderWithStyle {
           return scale(value);
         }
 
-        const color1 = getColorForTheme(colors[i - 1], this.theme);
-        const color2 = getColorForTheme(colors[i], this.theme);
+        const color1 = this.theme.visualization.getColorByName(colors[i - 1]);
+        const color2 = this.theme.visualization.getColorByName(colors[i]);
 
         scale = scaleLinear<string>()
           .domain([thresholds[i - 1], thresholds[i]])

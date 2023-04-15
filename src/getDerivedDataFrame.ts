@@ -4,8 +4,7 @@ import {
   DataFrame,
   Field,
   FieldType,
-  getColorForTheme,
-  GrafanaTheme,
+  GrafanaTheme2,
   Labels,
   MappingType,
   reduceField,
@@ -54,12 +53,12 @@ function createField(frame: DataFrame, name: string, getColumnOption?: GetColumn
   return field;
 }
 
-function mapColors(theme: GrafanaTheme, color: string): string {
+function mapColors(theme: GrafanaTheme2, color: string): string {
   if (color[0] === '#') {
     return color;
   }
 
-  const themedColor = getColorForTheme(color, theme);
+  const themedColor = theme.visualization.getColorByName(color);
 
   if (themedColor !== color) {
     return themedColor;
@@ -69,7 +68,7 @@ function mapColors(theme: GrafanaTheme, color: string): string {
 }
 
 function columnOptionToStyle(
-  theme: GrafanaTheme,
+  theme: GrafanaTheme2,
   {
     decimals,
     rangeMap,
@@ -105,7 +104,7 @@ function columnOptionToStyle(
   return result;
 }
 
-function createColumnStylesHandler(theme: GrafanaTheme, option: Options) {
+function createColumnStylesHandler(theme: GrafanaTheme2, option: Options) {
   const styles = new Map<string, CustomColumnStyle>();
   const defaultStyle = columnOptionToStyle(theme, option.defaultColumnOption);
 
@@ -158,7 +157,7 @@ export function getLabels(frame: DataFrame): Labels {
 }
 
 export default function getDerivedDataFrame(
-  theme: GrafanaTheme,
+  theme: GrafanaTheme2,
   series: DataFrame[],
   options: Options
 ): { frame: DataFrame; columns: CustomColumnStyle[] } {
